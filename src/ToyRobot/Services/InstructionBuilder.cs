@@ -25,6 +25,7 @@ namespace ToyRobot.Services
             string filePath = _configuration["path"];
 
             var loadedLines = File.ReadAllLines(filePath);
+            var firstPlace = false;
             foreach (var commandLine in loadedLines)
             {
                 var commandParts = commandLine.Split(' ');
@@ -35,7 +36,7 @@ namespace ToyRobot.Services
                     throw new InvalidDataException("Incorrect Command Type");
                 }
 
-                if (loadedLines.First() == commandLine)
+                if (currentCommand == Command.PLACE)
                 {
                     var robotStart = commandParts[1].Split(',');
                     Vector2 startPosition;
@@ -56,9 +57,11 @@ namespace ToyRobot.Services
                         throw new InvalidDataException("Incorrect Cardinal Type");
                     }
 
+                    firstPlace = true;
+
                     yield return new Instruction(currentCommand, startPosition, currentCardinal);
                 } 
-                else
+                else if (firstPlace)
                 {
                     yield return new Instruction(currentCommand);
                 }

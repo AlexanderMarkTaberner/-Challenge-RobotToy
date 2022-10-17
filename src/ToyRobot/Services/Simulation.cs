@@ -60,7 +60,7 @@ namespace ToyRobot.Services
 
                     case Command.REPORT:
                         _logger.LogInformation($"REPORT: \nOutput: {RobotToy.Position.X},{RobotToy.Position.Y},{RobotToy.Direction}");
-                        return;
+                        break;
                 }
             }
         }

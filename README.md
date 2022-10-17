@@ -66,6 +66,12 @@ MOVE
 RIGHT
 MOVE
 REPORT
+PLACE 3,1,NORTH
+REPORT
+RIGHT
+MOVE
+MOVE
+REPORT
 ```
 
 The size of the table is at a default 5x5 units but this can be configured using the `--size VALUE` command line argument.
