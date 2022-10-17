@@ -10,21 +10,13 @@ using ToyRobot.Services;
 
 namespace ToyRobot.Tests.Services
 {
-    public class VerifyFileTests
+    public class InstructionBuilderTests
     {
-        readonly Mock<ILoggerFactory> _loggerFactoryMock = new Mock<ILoggerFactory>();
-        readonly Mock<ILogger<InstructionBuilder>> _loggerMock = new Mock<ILogger<InstructionBuilder>>();
-
-        public VerifyFileTests()
-        {
-            _loggerFactoryMock.Setup(x => x.CreateLogger(It.IsAny<string>())).Returns(_loggerMock.Object);
-        }
-
         [Test]
         public void WithValidInput_VerificationOfFileIs_Valid()
         {
             // Arrange
-
+            var loggerMock = new Mock<ILogger<InstructionBuilder>>();
             var configuration = new ConfigurationBuilder()
                 .AddInMemoryCollection(
                 new Dictionary<string, string>
@@ -33,7 +25,7 @@ namespace ToyRobot.Tests.Services
                 }
             ).Build();
 
-            var verifyFile = new InstructionBuilder(_loggerMock.Object, configuration);
+            var verifyFile = new InstructionBuilder(loggerMock.Object, configuration);
 
             // Act
             var moves = verifyFile.VerifyAndBuild();
@@ -50,7 +42,7 @@ namespace ToyRobot.Tests.Services
         public void WithInvalidInput_VerificationOfFileIs_FormatException()
         {
             // Arrange
-
+            var loggerMock = new Mock<ILogger<InstructionBuilder>>();
             var configuration = new ConfigurationBuilder()
                 .AddInMemoryCollection(
                 new Dictionary<string, string>
@@ -59,7 +51,7 @@ namespace ToyRobot.Tests.Services
                 }
             ).Build();
 
-            var verifyFile = new InstructionBuilder(_loggerMock.Object, configuration);
+            var verifyFile = new InstructionBuilder(loggerMock.Object, configuration);
 
             // Act
             try
@@ -79,7 +71,7 @@ namespace ToyRobot.Tests.Services
         public void WithInvalidInput_VerificationOfFileIs_InvalidDataException()
         {
             // Arrange
-
+            var loggerMock = new Mock<ILogger<InstructionBuilder>>();
             var configuration = new ConfigurationBuilder()
                 .AddInMemoryCollection(
                 new Dictionary<string, string>
@@ -88,7 +80,7 @@ namespace ToyRobot.Tests.Services
                 }
             ).Build();
 
-            var verifyFile = new InstructionBuilder(_loggerMock.Object, configuration);
+            var verifyFile = new InstructionBuilder(loggerMock.Object, configuration);
 
             // Act
             try
@@ -108,7 +100,7 @@ namespace ToyRobot.Tests.Services
         public void WithEmptyInput_VerificationOfFileIs_InvalidDataException()
         {
             // Arrange
-
+            var loggerMock = new Mock<ILogger<InstructionBuilder>>();
             var configuration = new ConfigurationBuilder()
                 .AddInMemoryCollection(
                 new Dictionary<string, string>
@@ -117,7 +109,7 @@ namespace ToyRobot.Tests.Services
                 }
             ).Build();
 
-            var verifyFile = new InstructionBuilder(_loggerMock.Object, configuration);
+            var verifyFile = new InstructionBuilder(loggerMock.Object, configuration);
 
             // Act
             try

@@ -18,6 +18,11 @@ namespace ToyRobot.Models
             Size = size;
         }
 
+        /// <summary>
+        /// Given a poition, return if it is on the table (true) or off the table (false)
+        /// </summary>
+        /// <param name="posisiton"></param>
+        /// <returns></returns>
         public bool validPosition(Vector2 posisiton)
         {
             return (posisiton.X >= 0 && posisiton.Y >= 0 && posisiton.X <= Size && posisiton.Y <= Size);

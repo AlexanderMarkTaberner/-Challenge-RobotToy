@@ -22,28 +22,44 @@ namespace ToyRobot.Models
             Direction = Cardinal.NORTH;
         }
 
-        internal void Move(Table table)
+        /// <summary>
+        /// Moves the robot forward one space.
+        /// </summary>
+        /// <param name="table"></param>
+        /// <exception cref="InvalidOperationException"></exception>
+        public void Move(Table table)
         {
             var newPos = Position + OrdinalAmount();
             if (table.validPosition(newPos))
             {
                 Position = newPos;
 
-            } else
+            } 
+            else
             {
                 throw new InvalidOperationException("The Robot's new position is not on the table! Ignoring Instruction!");
             }
         }
 
-        internal void Turn(int dir)
+        /// <summary>
+        /// Turns the robot left or right dependent on input (-1 is left, 1 is right)
+        /// </summary>
+        /// <param name="dir"></param>
+        public void Turn(int dir)
         {
             Direction += dir;
+            // Overflow ENUM correction - could be better 
             if (((int)Direction) < 0) Direction = Cardinal.WEST;
             else if (((int)Direction) > 3) Direction = Cardinal.NORTH;
         }
 
-        internal void Place(Instruction instruction)
+        /// <summary>
+        /// Replaces position and direction for the start of the Robots actions.
+        /// </summary>
+        /// <param name="instruction"></param>
+        public void Place(Instruction instruction, Table table)
         {
+            if (!table.validPosition((Vector2)instruction.Position)) throw new InvalidDataException("The start position is off the table! exiting application.");
             Position = (Vector2)instruction.Position;
             Direction = (Cardinal)instruction.CardinalType;
         }

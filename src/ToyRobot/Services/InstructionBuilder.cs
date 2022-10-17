@@ -19,6 +19,7 @@ namespace ToyRobot.Services
             _configuration = configuration;
         }
 
+        ///<inheritdoc/>
         public IEnumerable<Instruction> VerifyAndBuild()
         {
             string filePath = _configuration["path"];

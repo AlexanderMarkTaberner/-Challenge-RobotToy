@@ -18,9 +18,13 @@ namespace ToyRobot.Services
             _simulation = simulation;
         }
 
+        /// <summary>
+        /// Runs the main application code path.
+        /// </summary>
+        /// <param name="stoppingToken"></param>
         public void Execute(CancellationToken stoppingToken = default)
         {
-            _simulation.run(_verifyFile.VerifyAndBuild());
+            _simulation.RunSimulation(_verifyFile.VerifyAndBuild());
         }
     }
 }

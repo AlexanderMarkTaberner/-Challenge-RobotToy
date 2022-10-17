@@ -24,15 +24,16 @@ namespace ToyRobot.Services
             RobotToy = new Robot();
         }
 
-        public void run(IEnumerable<Instruction> instructions)
+        ///<inheritdoc/>
+        public void RunSimulation(IEnumerable<Instruction> instructions)
         {
             foreach(Instruction instruction in instructions)
             {
                 switch (instruction.CommandType)
                 {
                     case Command.PLACE:
-                        if (!Table.validPosition((Vector2)instruction.Position)) throw new InvalidDataException("The start position is off the table! exiting application.");
-                        RobotToy.Place(instruction);
+                        RobotToy.Place(instruction, Table);
+                        _logger.LogInformation($"PLACE: Robot is starting at ({RobotToy.Position}) Facing ({RobotToy.Direction})");
                         break;
 
                     case Command.MOVE:
@@ -44,19 +45,21 @@ namespace ToyRobot.Services
                         {
                             _logger.LogInformation(e.Message);
                         }
+                        _logger.LogInformation($"MOVE: Robot is now at position ({RobotToy.Position})");
                         break;
 
                     case Command.LEFT:
                         RobotToy.Turn(-1);
+                        _logger.LogInformation($"LEFT: Robot is now Facing ({RobotToy.Direction})");
                         break;
 
                     case Command.RIGHT:
                         RobotToy.Turn(1);
+                        _logger.LogInformation($"RIGHT: Robot is now Facing ({RobotToy.Direction})");
                         break;
 
                     case Command.REPORT:
-                        var message = $"Output: {RobotToy.Position.X},{RobotToy.Position.Y},{RobotToy.Direction}";
-                        _logger.LogInformation(message);
+                        _logger.LogInformation($"REPORT: \nOutput: {RobotToy.Position.X},{RobotToy.Position.Y},{RobotToy.Direction}");
                         return;
                 }
             }
